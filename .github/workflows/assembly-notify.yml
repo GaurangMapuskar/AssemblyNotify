@@ -2,14 +2,15 @@ name: Assembly Notify
 
 on:
   schedule:
-    # Every 5 minutes
     - cron: '*/5 * * * *'
 
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   monitor:
-
     runs-on: ubuntu-latest
 
     env:
@@ -17,15 +18,16 @@ jobs:
       TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 
     steps:
-
-      - name: Checkout
-        uses: actions/checkout@v4
+      - name: Checkout Repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '24'
+          java-version: '21'
           cache: maven
 
       - name: Build
@@ -33,3 +35,14 @@ jobs:
 
       - name: Run Monitor
         run: java -jar target/*.jar
+
+      - name: Commit notified files
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add notified-files.txt
+
+          git diff --cached --quiet || git commit -m "Update notified files"
+
+          git push
