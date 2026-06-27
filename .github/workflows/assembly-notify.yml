@@ -1,4 +1,4 @@
-name: PDF Monitor
+name: Assembly Notify
 
 on:
   schedule:

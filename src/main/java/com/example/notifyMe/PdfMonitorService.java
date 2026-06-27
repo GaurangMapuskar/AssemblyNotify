@@ -22,7 +22,9 @@ public class PdfMonitorService {
     private final TelegramNotificationService notificationService;
     private final RestClient restClient;
 
-    private final Set<String> notifiedFiles = new HashSet<>();
+    private final NotificationPersistenceService persistenceService;
+
+    Set<String> notifiedFiles = persistenceService.loadNotifiedFiles();
 
     public void check() {
 
@@ -57,6 +59,7 @@ public class PdfMonitorService {
                         "✅ " + fileName + " is now available.");
 
                 notifiedFiles.add(fileName);
+                persistenceService.saveNotifiedFiles(notifiedFiles);
             }
 
         } catch (HttpClientErrorException.NotFound e) {
