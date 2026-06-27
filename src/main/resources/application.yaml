@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: notifyMe
+    chat-id: ${TELEGRAM_CHAT_ID}
+    api-key: ${TELEGRAM_BOT_TOKEN}
