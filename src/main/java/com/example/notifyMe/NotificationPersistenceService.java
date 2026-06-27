@@ -1,5 +1,7 @@
 package com.example.notifyMe;
 
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class NotificationPersistenceService {
 
     private static final Path FILE =

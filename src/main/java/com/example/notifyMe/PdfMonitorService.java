@@ -24,21 +24,22 @@ public class PdfMonitorService {
 
     private final NotificationPersistenceService persistenceService;
 
-    Set<String> notifiedFiles = persistenceService.loadNotifiedFiles();
 
     public void check() {
+
+        Set<String> notifiedFiles = persistenceService.loadNotifiedFiles();
 
         LocalDate today = LocalDate.now();
         LocalDate tomorrow = today.plusDays(1);
 
-        checkPdf(today.getDayOfMonth() + "-COUNCIL.pdf");
-        checkPdf(today.getDayOfMonth() + "-ASSEMBLY.pdf");
+        checkPdf(today.getDayOfMonth() + "-COUNCIL.pdf",notifiedFiles);
+        checkPdf(today.getDayOfMonth() + "-ASSEMBLY.pdf",notifiedFiles);
 
-        checkPdf(tomorrow.getDayOfMonth() + "-COUNCIL.pdf");
-        checkPdf(tomorrow.getDayOfMonth() + "-ASSEMBLY.pdf");
+        checkPdf(tomorrow.getDayOfMonth() + "-COUNCIL.pdf",notifiedFiles);
+        checkPdf(tomorrow.getDayOfMonth() + "-ASSEMBLY.pdf",notifiedFiles);
     }
 
-    private void checkPdf(String fileName) {
+    private void checkPdf(String fileName,Set<String> notifiedFiles) {
 
         if (notifiedFiles.contains(fileName)) {
             return;
