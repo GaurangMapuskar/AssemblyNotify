@@ -2,6 +2,7 @@ package com.example.notifyMe;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class PdfMonitorService {
@@ -68,9 +70,9 @@ public class PdfMonitorService {
             // PDF not yet published
 
         } catch (Exception e) {
-
-            notificationService.sendMessage(
-                    "⚠️ Error while checking " + fileName);
+            log.info("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            log.info(e.getMessage());
+            log.info("------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         }
     }
 }
